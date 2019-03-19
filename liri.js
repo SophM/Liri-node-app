@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------
-// install the packages and files needed for the program to runs
+// install the packages needed for the program to run
 // ------------------------------------------------------------------
 
 // in the folder containing liri.js
@@ -13,7 +13,7 @@
 
 
 // ------------------------------------------------------------------
-// load the packages and files needed for the program to runs
+// load the packages and files needed for the program to run
 // ------------------------------------------------------------------
 
 // load the "dotenv" package to read and set any environment variables
