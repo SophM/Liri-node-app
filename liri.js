@@ -46,7 +46,7 @@ var actions = ["concert-this", "spotify-this-song", "movie-this", "do-what-it-sa
 // Functions
 // ------------------------------------------------------------------
 
-// function to get artist/ band from user, call BandsInTown API
+// function to get artist/band from the user, call BandsInTown API
 // and display the infos
 function band() {
     inquirer
@@ -59,7 +59,7 @@ function band() {
         ]).then(function (answer) {
             // add user's answer to the query URL
             var queryURL = "https://rest.bandsintown.com/artists/" + answer.artist.split(' ').join('%20') + "/events?app_id=codingbootcamp";
-            console.log(queryURL);
+            // console.log(queryURL);
             // call the bandsInTown API using the node package "axios"
             axios
                 .get(queryURL)
@@ -71,15 +71,58 @@ function band() {
                     // display the name of the venue - in the terminal
                     console.log("-------------------------------------------------");
                     console.log("Name of the Venue: " + response.data[i].venue.name);
-                    // display venue location - in the terminal
+                    // display the venue location - in the terminal
                     console.log("Venue's Location: " + response.data[i].venue.city);
-                    // display date of the event (MM/DD/YYYY) - in the terminal
+                    // display the date of the event (MM/DD/YYYY HH:mm) - in the terminal
                     console.log("Date of event: " + moment(response.data[i].datetime).format("MM/DD/YYYY HH:mm A"));
                     console.log("-------------------------------------------------"); 
                     }
                 });
         })
 }
+
+// function to get a movie name from the user, call OMDB API
+// and display the infos
+function movie() {
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                message: "Which movie do you want infos about?",
+                name: "movieName"
+            }
+        ]).then(function (answer) {
+            // add user's answer to the query URL
+            var queryURL = "http://www.omdbapi.com/?t=" + answer.movieName.split(" ").join("+") + "&y=&plot=short&apikey=trilogy";
+            // console.log(queryURL);
+            // call the OMBD API using the node package "axios"
+            axios
+                .get(queryURL)
+                // once we get the data back so if axios request is successful
+                .then(function (response) {
+                    // console.log(response.data);
+                    // display the title of the movie - in the terminal
+                    console.log("-------------------------------------------------");
+                    console.log("Title: " + response.data.Title);
+                    // display the year the movie came out - in the terminal
+                    console.log("Year released: " + response.data.Year);
+                    // display the IMDB Rating of the movie - in the terminal
+                    console.log("IMDB Rating: " + response.data.imdbRating);
+                    // display the Rotten Tomatoes Rating of the movie - in the terminal
+                    console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
+                    // display the Country where the movie was produced - in the terminal
+                    console.log("Country: " + response.data.Country);
+                    // display the Language of the movie - in the terminal
+                    console.log("Language: " + response.data.Language);
+                    // display the Plot of the movie - in the terminal
+                    console.log("Plot: " + response.data.Plot);
+                    // display the Actors in the movie - in the terminal
+                    console.log("Actors: " + response.data.Actors);
+                    console.log("-------------------------------------------------");
+                });
+        })
+}
+
 
 
 // ------------------------------------------------------------------
@@ -109,32 +152,8 @@ inquirer
 
 
         } else if (answer.userChoice === actions[2]) {
-            // ask the user which movie does he/she want info about
-            inquirer
-                .prompt([
-                    {
-                        type: "input",
-                        message: "Which movie do you want infos about?",
-                        name: movie
-                    }
-                ]).then(function (answer) {
-                    // add user's answer to the query URL
-                    var queryURL = "https://rest.bandsintown.com/artists/" + answer.movie + "/events?app_id=codingbootcamp";
-                    // call the bandsInTown API using the node package "axios"
-                    axios
-                        .get(queryURL)
-                        // once we get the data back so if axios request is successful
-                        .then(function (response) {
-                            console.log(response);
-                            // display the name of the venue - in the terminal
-                            console.log("Name of the Venue: " + response.data.Year);
-                            // display venue location - in the terminal
-                            console.log("Venue's Location: " + response.data.Year);
-                            // display date of the event (MM/DD/YYYY) - in the terminal
-                            console.log("Date of event: " + response.data.Year);
-                        });
-                })
-
+            // run the movie() function
+            movie();
 
         } else if (answer.userChoice === actions[3]) {
 
