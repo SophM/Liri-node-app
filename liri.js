@@ -46,7 +46,10 @@ var fs = require("fs");
 // ------------------------------------------------------------------
 
 // array of actions that the user as to choose from
-var actions = ["concert-this", "spotify-this-song", "movie-this", "do-what-it-says"];
+var actions = ["concert-this", "spotify-this-song", "movie-this", "do-what-it-says", "Nothing, thank you!"];
+
+// variable to ask the user again or not depending on the case
+var startOver = true;
 
 
 // ------------------------------------------------------------------
@@ -284,6 +287,55 @@ function whatItSays() {
 
 }
 
+// function to ask the user to choose an action from the list defined previously
+// and run the appropriate function accordingly
+function chooseOption() {
+    // if the variable "startOver" is set to true
+    if (startOver) {
+        // ask the user to choose an option
+        inquirer
+            .prompt([
+                {
+                    type: "rawlist",
+                    message: "What can I help you with today? - Choose an option",
+                    choices: actions,
+                    name: "userChoice"
+                }
+            ]).then(function (answer) {
+                // if the user choice is "concert-this"
+                if (answer.userChoice === actions[0]) {
+                    // run the band() function
+                    band();
+                    // ask again the user to choose an option if startOver is set to true
+                    chooseOption(); 
+                // if the user choice is "spotify-this-song"
+                } else if (answer.userChoice === actions[1]) {
+                    // run the spotify() function
+                    song();
+                    // ask again the user to choose an option if startOver is set to true
+                    chooseOption();
+                    // if the user choice is "movie-this"
+                } else if (answer.userChoice === actions[2]) {
+                    // run the movie() function
+                    movie();
+                    // ask again the user to choose an option if startOver is set to true
+                    chooseOption();
+                    // if the user choice is "do-what-it-says"
+                } else if (answer.userChoice === actions[3]) {
+                    // run the whatItSays() function
+                    whatItSays();
+                    // ask again the user to choose an option if startOver is set to true
+                    chooseOption();
+                } else if (answer.userChoice === actions[4]) {
+                    // set the "startOver" variable to false
+                    startOver = false;
+                }
+            });
+    } else {
+        // display a "good-bye" message
+        console.log("Ok, see you next time!");
+    }
+}
 
 
 // ------------------------------------------------------------------
@@ -292,32 +344,7 @@ function whatItSays() {
 
 // welcome the user
 console.log("Welcome! I am Liri, a Language Interpretation and Recognition Interface.");
-// ask the user to choose an action from a list defined previously
-inquirer
-    .prompt([
-        {
-            type: "rawlist",
-            message: "What can I help you with today? - Choose an option",
-            choices: actions,
-            name: "userChoice"
-        }
-    ]).then(function (answer) {
-        // if the user choice is "concert-this"
-        if (answer.userChoice === actions[0]) {
-            // run the band() function
-            band();
+// ask the user to choose an option
+chooseOption();
 
-        } else if (answer.userChoice === actions[1]) {
-            // run the spotify() function
-            song();
 
-        } else if (answer.userChoice === actions[2]) {
-            // run the movie() function
-            movie();
-
-        } else if (answer.userChoice === actions[3]) {
-            whatItSays();
-
-        }
-
-    });
