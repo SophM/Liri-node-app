@@ -2,14 +2,13 @@
 // install the packages needed for the program to run
 // ------------------------------------------------------------------
 
-// in the folder containing liri.js
+// in the folder containing liri.js:
 
 // install the "dotenv" package by running "npm install dotenv" in your terminal
 // install the "inquirer" package by running "npm install inquirer" in your terminal 
 // install the "axios" package by running "npm install axios" in your terminal
 // install the "node-spotify-api" package by running "npm install --save node-spotify-api" in your terminal
 // install the "moment" package by running "npm install moment" in your terminal
-
 
 
 // ------------------------------------------------------------------
@@ -35,4 +34,95 @@ var inquirer = require("inquirer");
 var moment = require("moment");
 
 
+// ------------------------------------------------------------------
+// variables
+// ------------------------------------------------------------------
 
+// array of actions that the user as to choose from
+var actions = ["concert-this", "spotify-this-song", "movie-this", "do-what-it-says"];
+
+
+// ------------------------------------------------------------------
+// Main process
+// ------------------------------------------------------------------
+
+
+// welcome the user
+console.log("Welcome! I am Liri, your xxx.");
+// ask the user to choose an action from a list defined previously
+inquirer
+    .prompt([
+        {
+            type: "rawlist",
+            message: "What can I help you with today?",
+            choices: actions,
+            name: userChoice
+        }
+    ]).then(function (answer) {
+        // if the user choice is "concert-this"
+        if (answer.userChoice === actions[0]) {
+            // ask the user which band does he/she want info about
+            inquirer
+                .prompt([
+                    {
+                        type: "input",
+                        message: "Which band/artist do you want infos about?",
+                        name: artist
+                    }
+                ]).then(function (answer) {
+                    // add user's answer to the query URL
+                    var queryURL = "https://rest.bandsintown.com/artists/" + answer.artist + "/events?app_id=codingbootcamp";
+                    // call the bandsInTown API using the node package "axios"
+                    axios
+                        .get(queryURL)
+                        // once we get the data back so if axios request is successful
+                        .then(function (response) {
+                            console.log(response);
+                            // display the name of the venue - in the terminal
+                            console.log("Name of the Venue: " + response.data.Year);
+                            // display venue location - in the terminal
+                            console.log("Venue's Location: " + response.data.Year);
+                            // display date of the event (MM/DD/YYYY) - in the terminal
+                             console.log("Date of event: " + response.data.Year); 
+                        });
+                })
+
+        } else if (answer.userChoice === actions[1]) {
+
+
+
+        } else if (answer.userChoice === actions[2]) {
+            // ask the user which movie does he/she want info about
+            inquirer
+                .prompt([
+                    {
+                        type: "input",
+                        message: "Which movie do you want infos about?",
+                        name: movie
+                    }
+                ]).then(function (answer) {
+                    // add user's answer to the query URL
+                    var queryURL = "https://rest.bandsintown.com/artists/" + answer.movie + "/events?app_id=codingbootcamp";
+                    // call the bandsInTown API using the node package "axios"
+                    axios
+                        .get(queryURL)
+                        // once we get the data back so if axios request is successful
+                        .then(function (response) {
+                            console.log(response);
+                            // display the name of the venue - in the terminal
+                            console.log("Name of the Venue: " + response.data.Year);
+                            // display venue location - in the terminal
+                            console.log("Venue's Location: " + response.data.Year);
+                            // display date of the event (MM/DD/YYYY) - in the terminal
+                             console.log("Date of event: " + response.data.Year); 
+                        });
+                })
+
+
+        } else if (answer.userChoice === actions[3]) {
+
+
+
+        }
+
+    })
