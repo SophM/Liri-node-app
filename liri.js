@@ -18,20 +18,27 @@
 // load the "dotenv" package to read and set any environment variables
 require("dotenv").config();
 
+// load the node-spotify-api package
+// and store it in the variable "Spotify"
+var Spotify = require("node-spotify-api");
 // load the "keys.js" file and store it in a variable
-// var keys = require("./keys.js");
-
-// access keys information for Sportify API
-// var spotify = new Spotify(keys.spotify);
+var keys = require("./keys.js");
+// access my credentials stored in "keys" to be able to call successfully the Spotify API
+var spotify = new Spotify(keys.spotify);
 
 // load the axios package to request data from OMBD and BandInTown APIs
+// and store it in the variable "axios"
 var axios = require("axios");
 
 // load the "inquirer" package to get user input
+// and store it in the variable "inquirer"
 var inquirer = require("inquirer");
 
 // load the "moment" package to display the date of the concert in DD/MM/YYYY
 var moment = require("moment");
+
+// load the fs package for reading and writing files
+var fs = require("fs");
 
 
 // ------------------------------------------------------------------
@@ -58,7 +65,7 @@ function band() {
             }
         ]).then(function (answer) {
             // add the user's input to the query URL
-            var queryURL = "https://rest.bandsintown.com/artists/" + answer.artist.split(" ").join("%20") + "/events?app_id=codingbootcamp";
+            var queryURL = "https://rest.bandsintown.com/artists/" + answer.artist.split(" ").join("%20") + "/events?app_id=liriApp";
             // console.log(queryURL);
             // call the bandsInTown API using the node package "axios"
             axios
@@ -70,20 +77,24 @@ function band() {
                     if (response.data.length === 0) {
                         // display a message
                         console.log("Sorry, there is no upcoming events for this artist/band.")
-                    // if there is upcoming events,
+                        // if there is upcoming events,
                     } else {
                         // for each event, 
                         for (var i = 0; i < response.data.length; i++) {
-                        // display the name of the venue - in the terminal
-                        console.log("-------------------------------------------------");
-                        console.log("Name of the Venue: " + response.data[i].venue.name);
-                        // display the venue location - in the terminal
-                        console.log("Venue's Location: " + response.data[i].venue.city);
-                        // display the date of the event (MM/DD/YYYY HH:mm) - in the terminal
-                        console.log("Date of event: " + moment(response.data[i].datetime).format("MM/DD/YYYY HH:mm A"));
-                        console.log("-------------------------------------------------"); 
+                            // display the name of the venue - in the terminal
+                            console.log("-------------------------------------------------");
+                            console.log("Name of the Venue: " + response.data[i].venue.name);
+                            // display the venue location - in the terminal
+                            console.log("Venue's Location: " + response.data[i].venue.city);
+                            // display the date of the event (MM/DD/YYYY HH:mm) - in the terminal
+                            console.log("Date of event: " + moment(response.data[i].datetime).format("MM/DD/YYYY HH:mm A"));
+                            console.log("-------------------------------------------------");
                         }
                     }
+                })
+                // if there is error, display it
+                .catch(function (err) {
+                    console.log(err);
                 });
         });
 }
@@ -95,7 +106,7 @@ function movie() {
         .prompt([
             {
                 type: "input",
-                message: "Which movie do you want infos about? - if no movie entered, you will get info on Mr. Nobody -",
+                message: "Which movie do you want infos about? - if no movie entered, I'll choose one! -",
                 name: "movieName"
             }
         ]).then(function (answer) {
@@ -128,8 +139,12 @@ function movie() {
                         // display the Actors in the movie - in the terminal
                         console.log("Actors: " + response.data.Actors);
                         console.log("-------------------------------------------------");
+                    })
+                    // if there is error, display it
+                    .catch(function (err) {
+                        console.log(err);
                     });
-            // if the user didn't enter a movie, give info for the movie "Mr. Nobody"
+                // if the user didn't enter a movie, give info for the movie "Mr. Nobody"
             } else {
                 // call the OMBD API using the node package "axios"
                 axios
@@ -154,10 +169,119 @@ function movie() {
                         // display the Actors in the movie - in the terminal
                         console.log("Actors: " + response.data.Actors);
                         console.log("-------------------------------------------------");
+                    })
+                    // if there is error, display it
+                    .catch(function (err) {
+                        console.log(err);
                     });
 
-            }   
+            }
         });
+}
+
+// function to get a song name from the user, call Spotify API
+// and display the infos
+function song() {
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                message: "Which song do you want infos about? - if no song entered, I'll choose one! -",
+                name: "song"
+            }
+        ]).then(function (answer) {
+            // if the user entered a song,
+            if (answer.song) {
+                // use the node-spotify-api package to call the Spotify API with the user's input
+                spotify
+                    .search({ type: "track", query: answer.song, limit: 1 }, function (err, data) {
+                        // if an error occured, display it
+                        if (err) {
+                            return console.log("Error occurred: " + err);
+                        }
+                        // if no error, display the info
+                        // console.log(JSON.stringify(data, null, 2));
+                        // define a variable to refer to the data more easily
+                        var results = data.tracks.items[0];
+                        // console.log(JSON.stringify(results, null, 2));
+                        // display the name(s) of artist(s)/band - in the terminal
+                        console.log("-------------------------------------------------");
+                        console.log("Artist(s)/Band: " + results.artists[0].name);
+                        // display the name of the song - in the terminal
+                        console.log("Name of the song: " + results.name);
+                        // display the Spotify link of the song - in the terminal
+                        console.log("Spotify link of the song: " + results.external_urls.spotify);
+                        // display the name of the album the song is from - in the terminal
+                        console.log("Name of the album: " + results.album.name);
+                        console.log("-------------------------------------------------");
+
+                    });
+                // if the user didn't enter a song  
+            } else {
+                // use the node-spotify-api package to call the Spotify API with 'The Sign' by Ace of Base
+                spotify
+                    .search({ type: "track", query: "Despair, Hangover & Ecstasy", limit: 1 }, function (err, data) {
+                        // if an error occured, display it
+                        if (err) {
+                            return console.log("Error occurred: " + err);
+                        }
+                        // if no error, display the info
+                        // define a variable to refer to the data more easily
+                        var results = data.tracks.items[0];
+                        // display the name(s) of artist(s)/band - in the terminal
+                        console.log("-------------------------------------------------");
+                        console.log("Artist(s)/Band: " + results.artists[0].name);
+                        // display the name of the song - in the terminal
+                        console.log("Name of the song: " + results.name);
+                        // display the Spotify link of the song - in the terminal
+                        console.log("Spotify link of the song: " + results.external_urls.spotify);
+                        // display the name of the album the song is from - in the terminal
+                        console.log("Name of the album: " + results.album.name);
+                        console.log("-------------------------------------------------");
+                    });
+            }
+        });
+}
+
+// function for "do-what-it-says"
+function whatItSays() {
+    // get the info from random.text with fs
+    fs
+        .readFile("random.txt", "utf8", function (error, data) {
+
+            // If there is error, display it.
+            if (error) {
+                return console.log(error);
+            }
+
+            // console.log(data);
+            // transform the data into an array
+            var dataArr = data.split(",");
+            // console.log(dataArr[1]);
+
+            // call the Spotify API with the second element of dataArr, which correspond to the name of the song
+            spotify
+                .search({ type: "track", query: dataArr[1], limit: 1 }, function (err, data) {
+                    // if an error occured, display it
+                    if (err) {
+                        return console.log("Error occurred: " + err);
+                    }
+                    // if no error, display the info
+                    // define a variable to refer to the data more easily
+                    var results = data.tracks.items[0];
+                    // display the name(s) of artist(s)/band - in the terminal
+                    console.log("-------------------------------------------------");
+                    console.log("Artist(s)/Band: " + results.artists[0].name);
+                    // display the name of the song - in the terminal
+                    console.log("Name of the song: " + results.name);
+                    // display the Spotify link of the song - in the terminal
+                    console.log("Spotify link of the song: " + results.external_urls.spotify);
+                    // display the name of the album the song is from - in the terminal
+                    console.log("Name of the album: " + results.album.name);
+                    console.log("-------------------------------------------------");
+                });
+        });
+
 }
 
 
@@ -165,7 +289,6 @@ function movie() {
 // ------------------------------------------------------------------
 // Main process
 // ------------------------------------------------------------------
-
 
 // welcome the user
 console.log("Welcome! I am Liri, a Language Interpretation and Recognition Interface.");
@@ -185,16 +308,16 @@ inquirer
             band();
 
         } else if (answer.userChoice === actions[1]) {
-
+            // run the spotify() function
+            song();
 
         } else if (answer.userChoice === actions[2]) {
             // run the movie() function
             movie();
 
         } else if (answer.userChoice === actions[3]) {
-
-
+            whatItSays();
 
         }
 
-    })
+    });
