@@ -4,7 +4,7 @@
 
 // Using your terminal, navigate to the folder containing liri.js
 
-// FIRST, run if the file "package.json" is not present in the folder
+// FIRST, if the file "package.json" is not present in the folder, run:
 // npm init -y
 
 // THEN, install the node packages, one after the other - the order doesn't matter
