@@ -3,7 +3,7 @@
 In this project, I built a Language Interpretation and Recognition Interface, called Liri.
 
 Liri is meant to be run in the terminal, using Node.js. Node.js is an open-source JavaScript runtime environment, that allows to execute JavaScript code outside of a browser. Several node packages have to be installed for Liri to run properly. They are listed in "liri.js", along with guidelines for the installation.
-After installing the required packages, type `node liri.js` to run liri and get started!
+After installing the required packages, type `node liri.js` in your terminal to run liri and get started!
 
 So far, Liri proposes 5 options to the user:
 - concert-this
