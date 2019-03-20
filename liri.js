@@ -48,6 +48,7 @@ var inquirer = require("inquirer");
 var moment = require("moment");
 
 // load the fs package for reading and writing files
+// it is a core node package, no need to install it
 var fs = require("fs");
 
 
@@ -70,13 +71,20 @@ function band() {
         .prompt([
             {
                 type: "input",
-                message: "Which band/artist do you want infos about?",
+                message: "Which band/artist do you want infos about? - if no artist/band entered, I'll choose one! -",
                 name: "artist"
             }
         ]).then(function (answer) {
-            // add the user's input to the query URL
-            var queryURL = "https://rest.bandsintown.com/artists/" + answer.artist.split(" ").join("%20") + "/events?app_id=liriApp";
-            // console.log(queryURL);
+            // if the user entered a movie
+            if (answer.artist) {
+                // add the user's input to the query URL
+                var queryURL = "https://rest.bandsintown.com/artists/" + answer.artist.split(" ").join("%20") + "/events?app_id=liriApp";
+                // console.log(queryURL);
+            // otherwise...
+            } else {
+                // give info about Rodrigo y Gabriela
+                var queryURL = "https://rest.bandsintown.com/artists/Rodrigo%20y%20Gabriela/events?app_id=liriApp";
+            }
             // call the bandsInTown API using the node package "axios"
             axios
                 .get(queryURL)
@@ -93,6 +101,7 @@ function band() {
                         for (var i = 0; i < response.data.length; i++) {
                             // display the name of the venue - in the terminal
                             console.log("-------------------------------------------------");
+                            console.log("Artist(s)/Band: " + response.data[i].lineup[0]);
                             console.log("Name of the Venue: " + response.data[i].venue.name);
                             // display the venue location - in the terminal
                             console.log("Venue's Location: " + response.data[i].venue.city);
@@ -123,78 +132,48 @@ function movie() {
                 name: "movieName"
             }
         ]).then(function (answer) {
-            // if the user entered a movie,
+            // if the user entered a movie
             if (answer.movieName) {
                 // add the user's input to the query URL
                 var queryURL = "http://www.omdbapi.com/?t=" + answer.movieName.split(" ").join("+") + "&y=&plot=short&apikey=trilogy";
                 // console.log(queryURL);
-                // call the OMBD API using the node package "axios"
-                axios
-                    .get(queryURL)
-                    // once we get the data back so if axios request is successful
-                    .then(function (response) {
-                        // console.log(response.data);
-                        // display the title of the movie - in the terminal
-                        console.log("-------------------------------------------------");
-                        console.log("Title: " + response.data.Title);
-                        // display the year the movie came out - in the terminal
-                        console.log("Year released: " + response.data.Year);
-                        // display the IMDB Rating of the movie - in the terminal
-                        console.log("IMDB Rating: " + response.data.imdbRating);
-                        // display the Rotten Tomatoes Rating of the movie - in the terminal
-                        console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
-                        // display the Country where the movie was produced - in the terminal
-                        console.log("Country: " + response.data.Country);
-                        // display the Language of the movie - in the terminal
-                        console.log("Language: " + response.data.Language);
-                        // display the Plot of the movie - in the terminal
-                        console.log("Plot: " + response.data.Plot);
-                        // display the Actors in the movie - in the terminal
-                        console.log("Actors: " + response.data.Actors);
-                        console.log("-------------------------------------------------");
-
-                        // ask the user if she/he wants to choose another option
-                        chooseOption();
-                    })
-                    // if there is error, display it
-                    .catch(function (err) {
-                        console.log(err);
-                    });
-                // if the user didn't enter a movie, give info for the movie "Mr. Nobody"
+            // otherwise...
             } else {
-                // call the OMBD API using the node package "axios"
-                axios
-                    .get("http://www.omdbapi.com/?t=Mr.+Nobody&y=&plot=short&apikey=trilogy")
-                    // once we get the data back so if axios request is successful
-                    .then(function (response) {
-                        // display the title of the movie - in the terminal
-                        console.log("-------------------------------------------------");
-                        console.log("Title: " + response.data.Title);
-                        // display the year the movie came out - in the terminal
-                        console.log("Year released: " + response.data.Year);
-                        // display the IMDB Rating of the movie - in the terminal
-                        console.log("IMDB Rating: " + response.data.imdbRating);
-                        // display the Rotten Tomatoes Rating of the movie - in the terminal
-                        console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
-                        // display the Country where the movie was produced - in the terminal
-                        console.log("Country: " + response.data.Country);
-                        // display the Language of the movie - in the terminal
-                        console.log("Language: " + response.data.Language);
-                        // display the Plot of the movie - in the terminal
-                        console.log("Plot: " + response.data.Plot);
-                        // display the Actors in the movie - in the terminal
-                        console.log("Actors: " + response.data.Actors);
-                        console.log("-------------------------------------------------");
-
-                        // ask the user if she/he wants to choose another option
-                        chooseOption();
-                    })
-                    // if there is error, display it
-                    .catch(function (err) {
-                        console.log(err);
-                    });
-
+                // query URL with "Mr. Nobody"
+                var queryURL = "http://www.omdbapi.com/?t=Mr.+Nobody&y=&plot=short&apikey=trilogy"
             }
+            // call the OMBD API using the node package "axios"
+            axios
+                .get(queryURL)
+                // once we get the data back so if axios request is successful
+                .then(function (response) {
+                    // console.log(response.data);
+                    // display the title of the movie - in the terminal
+                    console.log("-------------------------------------------------");
+                    console.log("Title: " + response.data.Title);
+                    // display the year the movie came out - in the terminal
+                    console.log("Year released: " + response.data.Year);
+                    // display the IMDB Rating of the movie - in the terminal
+                    console.log("IMDB Rating: " + response.data.imdbRating);
+                    // display the Rotten Tomatoes Rating of the movie - in the terminal
+                    console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
+                    // display the country where the movie was produced - in the terminal
+                    console.log("Country: " + response.data.Country);
+                    // display the Language of the movie - in the terminal
+                    console.log("Language: " + response.data.Language);
+                    // display the Plot of the movie - in the terminal
+                    console.log("Plot: " + response.data.Plot);
+                    // display the Actors in the movie - in the terminal
+                    console.log("Actors: " + response.data.Actors);
+                    console.log("-------------------------------------------------");
+
+                    // ask the user if she/he wants to choose another option
+                    chooseOption();
+                })
+                // if there is error, display it
+                .catch(function (err) {
+                    console.log(err);
+                });
         });
 }
 
@@ -240,7 +219,7 @@ function song() {
                     });
                 // if the user didn't enter a song  
             } else {
-                // use the node-spotify-api package to call the Spotify API with 'The Sign' by Ace of Base
+                // use the node-spotify-api package to call the Spotify API with "Despair, Hangover & Ecstasy" by The Do
                 spotify
                     .search({ type: "track", query: "Despair, Hangover & Ecstasy", limit: 1 }, function (err, data) {
                         // if an error occured, display it
@@ -268,7 +247,7 @@ function song() {
         });
 }
 
-// function for "do-what-it-says"
+// function for "do-what-it-says" - will call the SPOTIFY API
 function whatItSays() {
     // get the info from random.text with fs
     fs
@@ -280,13 +259,10 @@ function whatItSays() {
             }
 
             // console.log(data);
-            // transform the data into an array
-            var dataArr = data.split(",");
-            // console.log(dataArr[1]);
 
-            // call the Spotify API with the second element of dataArr, which correspond to the name of the song
+            // call the Spotify API with the content of random.txt, which correspond to "Logical Song" by Supertramp
             spotify
-                .search({ type: "track", query: dataArr[1], limit: 1 }, function (err, data) {
+                .search({ type: "track", query: data, limit: 1 }, function (err, data) {
                     // if an error occured, display it
                     if (err) {
                         return console.log("Error occurred: " + err);
@@ -329,24 +305,22 @@ function chooseOption() {
             if (answer.userChoice === actions[0]) {
                 // run the band() function
                 band();
-            // if the user choice is "spotify-this-song"
+                // if the user choice is "spotify-this-song"
             } else if (answer.userChoice === actions[1]) {
                 // run the spotify() function
                 song();
-            // if the user choice is "movie-this"
+                // if the user choice is "movie-this"
             } else if (answer.userChoice === actions[2]) {
                 // run the movie() function
                 movie();
-            // if the user choice is "do-what-it-says"
+                // if the user choice is "do-what-it-says"
             } else if (answer.userChoice === actions[3]) {
                 // run the whatItSays() function
                 whatItSays();
-            // if the user choice is "Nothing, thank you!"
+                // if the user choice is "Nothing, thank you!"
             } else if (answer.userChoice === actions[4]) {
                 // display message
                 console.log("Ok, see you next time!");
-                // set "startOver" to false
-                startOver = false;
             }
         });
 }
