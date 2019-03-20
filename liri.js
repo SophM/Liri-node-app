@@ -67,6 +67,7 @@ var actions = ["concert-this", "spotify-this-song", "movie-this", "do-what-it-sa
 // function to get artist/band from the user, call BandsInTown API
 // and display the infos
 function band() {
+    // use the inquirer package to ask the user for input
     inquirer
         .prompt([
             {
@@ -124,6 +125,7 @@ function band() {
 // function to get a movie name from the user, call OMDB API
 // and display the infos
 function movie() {
+    // use the inquirer package to ask the user for input
     inquirer
         .prompt([
             {
@@ -180,6 +182,7 @@ function movie() {
 // function to get a song name from the user, call Spotify API
 // and display the infos
 function song() {
+    // use the inquirer package to ask the user for input
     inquirer
         .prompt([
             {
