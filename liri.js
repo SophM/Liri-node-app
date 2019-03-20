@@ -2,13 +2,22 @@
 // install the packages needed for the program to run
 // ------------------------------------------------------------------
 
-// in the folder containing liri.js:
+// Using your terminal, navigate to the folder containing liri.js
 
-// install the "dotenv" package by running "npm install dotenv" in your terminal
-// install the "inquirer" package by running "npm install inquirer" in your terminal 
-// install the "axios" package by running "npm install axios" in your terminal
-// install the "node-spotify-api" package by running "npm install --save node-spotify-api" in your terminal
-// install the "moment" package by running "npm install moment" in your terminal
+// FIRST, run if the file "package.json" is not present in the folder
+// npm init -y
+
+// THEN, install the node packages, one after the other - the order doesn't matter
+// install the "dotenv" package by running
+// npm install dotenv 
+// install the "inquirer" package by running
+// npm install inquirer
+// install the "axios" package by running
+// npm install axios
+// install the "node-spotify-api" package by running 
+// npm install --save node-spotify-api
+// install the "moment" package by running 
+// npm install moment
 
 
 // ------------------------------------------------------------------
@@ -19,11 +28,12 @@
 require("dotenv").config();
 
 // load the node-spotify-api package
-// and store it in the variable "Spotify"
+// and store it in a variable
 var Spotify = require("node-spotify-api");
 // load the "keys.js" file and store it in a variable
+// keys.js is used to access my Spotify credentials, actually stored in the hidden file ".env"
 var keys = require("./keys.js");
-// access my credentials stored in "keys" to be able to call successfully the Spotify API
+// link my Spotify credentials and the Spotify node package to be able to call successfully the Spotify API
 var spotify = new Spotify(keys.spotify);
 
 // load the axios package to request data from OMBD and BandInTown APIs
@@ -47,9 +57,6 @@ var fs = require("fs");
 
 // array of actions that the user as to choose from
 var actions = ["concert-this", "spotify-this-song", "movie-this", "do-what-it-says", "Nothing, thank you!"];
-
-// variable to ask the user again or not depending on the case
-var startOver = true;
 
 
 // ------------------------------------------------------------------
@@ -94,6 +101,9 @@ function band() {
                             console.log("-------------------------------------------------");
                         }
                     }
+
+                    // ask the user if she/he wants to choose another option
+                    chooseOption();
                 })
                 // if there is error, display it
                 .catch(function (err) {
@@ -142,6 +152,9 @@ function movie() {
                         // display the Actors in the movie - in the terminal
                         console.log("Actors: " + response.data.Actors);
                         console.log("-------------------------------------------------");
+
+                        // ask the user if she/he wants to choose another option
+                        chooseOption();
                     })
                     // if there is error, display it
                     .catch(function (err) {
@@ -172,6 +185,9 @@ function movie() {
                         // display the Actors in the movie - in the terminal
                         console.log("Actors: " + response.data.Actors);
                         console.log("-------------------------------------------------");
+
+                        // ask the user if she/he wants to choose another option
+                        chooseOption();
                     })
                     // if there is error, display it
                     .catch(function (err) {
@@ -218,6 +234,9 @@ function song() {
                         console.log("Name of the album: " + results.album.name);
                         console.log("-------------------------------------------------");
 
+                        // ask the user if she/he wants to choose another option
+                        chooseOption();
+
                     });
                 // if the user didn't enter a song  
             } else {
@@ -241,6 +260,9 @@ function song() {
                         // display the name of the album the song is from - in the terminal
                         console.log("Name of the album: " + results.album.name);
                         console.log("-------------------------------------------------");
+
+                        // ask the user if she/he wants to choose another option
+                        chooseOption();
                     });
             }
         });
@@ -282,6 +304,9 @@ function whatItSays() {
                     // display the name of the album the song is from - in the terminal
                     console.log("Name of the album: " + results.album.name);
                     console.log("-------------------------------------------------");
+
+                    // ask the user if she/he wants to choose another option
+                    chooseOption();
                 });
         });
 
@@ -290,51 +315,40 @@ function whatItSays() {
 // function to ask the user to choose an action from the list defined previously
 // and run the appropriate function accordingly
 function chooseOption() {
-    // if the variable "startOver" is set to true
-    if (startOver) {
-        // ask the user to choose an option
-        inquirer
-            .prompt([
-                {
-                    type: "rawlist",
-                    message: "What can I help you with today? - Choose an option",
-                    choices: actions,
-                    name: "userChoice"
-                }
-            ]).then(function (answer) {
-                // if the user choice is "concert-this"
-                if (answer.userChoice === actions[0]) {
-                    // run the band() function
-                    band();
-                    // ask again the user to choose an option if startOver is set to true
-                    chooseOption(); 
-                // if the user choice is "spotify-this-song"
-                } else if (answer.userChoice === actions[1]) {
-                    // run the spotify() function
-                    song();
-                    // ask again the user to choose an option if startOver is set to true
-                    chooseOption();
-                    // if the user choice is "movie-this"
-                } else if (answer.userChoice === actions[2]) {
-                    // run the movie() function
-                    movie();
-                    // ask again the user to choose an option if startOver is set to true
-                    chooseOption();
-                    // if the user choice is "do-what-it-says"
-                } else if (answer.userChoice === actions[3]) {
-                    // run the whatItSays() function
-                    whatItSays();
-                    // ask again the user to choose an option if startOver is set to true
-                    chooseOption();
-                } else if (answer.userChoice === actions[4]) {
-                    // set the "startOver" variable to false
-                    startOver = false;
-                }
-            });
-    } else {
-        // display a "good-bye" message
-        console.log("Ok, see you next time!");
-    }
+    // ask the user to choose an option
+    inquirer
+        .prompt([
+            {
+                type: "rawlist",
+                message: "What can I help you with? - Choose an option",
+                choices: actions,
+                name: "userChoice"
+            }
+        ]).then(function (answer) {
+            // if the user choice is "concert-this"
+            if (answer.userChoice === actions[0]) {
+                // run the band() function
+                band();
+            // if the user choice is "spotify-this-song"
+            } else if (answer.userChoice === actions[1]) {
+                // run the spotify() function
+                song();
+            // if the user choice is "movie-this"
+            } else if (answer.userChoice === actions[2]) {
+                // run the movie() function
+                movie();
+            // if the user choice is "do-what-it-says"
+            } else if (answer.userChoice === actions[3]) {
+                // run the whatItSays() function
+                whatItSays();
+            // if the user choice is "Nothing, thank you!"
+            } else if (answer.userChoice === actions[4]) {
+                // display message
+                console.log("Ok, see you next time!");
+                // set "startOver" to false
+                startOver = false;
+            }
+        });
 }
 
 
