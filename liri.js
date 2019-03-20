@@ -19,10 +19,10 @@
 require("dotenv").config();
 
 // load the "keys.js" file and store it in a variable
-var keys = require("./keys.js");
+// var keys = require("./keys.js");
 
 // access keys information for Sportify API
-var spotify = new Spotify(keys.spotify);
+// var spotify = new Spotify(keys.spotify);
 
 // load the axios package to request data from OMBD and BandInTown APIs
 var axios = require("axios");
@@ -43,49 +43,66 @@ var actions = ["concert-this", "spotify-this-song", "movie-this", "do-what-it-sa
 
 
 // ------------------------------------------------------------------
+// Functions
+// ------------------------------------------------------------------
+
+// function to get artist/ band from user, call BandsInTown API
+// and display the infos
+function band() {
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                message: "Which band/artist do you want infos about?",
+                name: "artist"
+            }
+        ]).then(function (answer) {
+            // add user's answer to the query URL
+            var queryURL = "https://rest.bandsintown.com/artists/" + answer.artist.split(' ').join('%20') + "/events?app_id=codingbootcamp";
+            console.log(queryURL);
+            // call the bandsInTown API using the node package "axios"
+            axios
+                .get(queryURL)
+                // once we get the data back so if axios request is successful
+                .then(function (response) {
+                    // console.log(response.data);
+                    // for each event 
+                    for (var i = 0; i < response.data.length; i++) {
+                    // display the name of the venue - in the terminal
+                    console.log("-------------------------------------------------");
+                    console.log("Name of the Venue: " + response.data[i].venue.name);
+                    // display venue location - in the terminal
+                    console.log("Venue's Location: " + response.data[i].venue.city);
+                    // display date of the event (MM/DD/YYYY) - in the terminal
+                    console.log("Date of event: " + moment(response.data[i].datetime).format("MM/DD/YYYY HH:mm A"));
+                    console.log("-------------------------------------------------"); 
+                    }
+                });
+        })
+}
+
+
+// ------------------------------------------------------------------
 // Main process
 // ------------------------------------------------------------------
 
 
 // welcome the user
-console.log("Welcome! I am Liri, your xxx.");
+console.log("Welcome! I am Liri, a Language Interpretation and Recognition Interface.");
 // ask the user to choose an action from a list defined previously
 inquirer
     .prompt([
         {
             type: "rawlist",
-            message: "What can I help you with today?",
+            message: "What can I help you with today? - Choose an option",
             choices: actions,
-            name: userChoice
+            name: "userChoice"
         }
     ]).then(function (answer) {
         // if the user choice is "concert-this"
         if (answer.userChoice === actions[0]) {
-            // ask the user which band does he/she want info about
-            inquirer
-                .prompt([
-                    {
-                        type: "input",
-                        message: "Which band/artist do you want infos about?",
-                        name: artist
-                    }
-                ]).then(function (answer) {
-                    // add user's answer to the query URL
-                    var queryURL = "https://rest.bandsintown.com/artists/" + answer.artist + "/events?app_id=codingbootcamp";
-                    // call the bandsInTown API using the node package "axios"
-                    axios
-                        .get(queryURL)
-                        // once we get the data back so if axios request is successful
-                        .then(function (response) {
-                            console.log(response);
-                            // display the name of the venue - in the terminal
-                            console.log("Name of the Venue: " + response.data.Year);
-                            // display venue location - in the terminal
-                            console.log("Venue's Location: " + response.data.Year);
-                            // display date of the event (MM/DD/YYYY) - in the terminal
-                             console.log("Date of event: " + response.data.Year); 
-                        });
-                })
+            // run the band() function
+            band();
 
         } else if (answer.userChoice === actions[1]) {
 
@@ -114,7 +131,7 @@ inquirer
                             // display venue location - in the terminal
                             console.log("Venue's Location: " + response.data.Year);
                             // display date of the event (MM/DD/YYYY) - in the terminal
-                             console.log("Date of event: " + response.data.Year); 
+                            console.log("Date of event: " + response.data.Year);
                         });
                 })
 
