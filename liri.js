@@ -57,8 +57,8 @@ function band() {
                 name: "artist"
             }
         ]).then(function (answer) {
-            // add user's answer to the query URL
-            var queryURL = "https://rest.bandsintown.com/artists/" + answer.artist.split(' ').join('%20') + "/events?app_id=codingbootcamp";
+            // add the user's input to the query URL
+            var queryURL = "https://rest.bandsintown.com/artists/" + answer.artist.split(" ").join("%20") + "/events?app_id=codingbootcamp";
             // console.log(queryURL);
             // call the bandsInTown API using the node package "axios"
             axios
@@ -66,19 +66,26 @@ function band() {
                 // once we get the data back so if axios request is successful
                 .then(function (response) {
                     // console.log(response.data);
-                    // for each event 
-                    for (var i = 0; i < response.data.length; i++) {
-                    // display the name of the venue - in the terminal
-                    console.log("-------------------------------------------------");
-                    console.log("Name of the Venue: " + response.data[i].venue.name);
-                    // display the venue location - in the terminal
-                    console.log("Venue's Location: " + response.data[i].venue.city);
-                    // display the date of the event (MM/DD/YYYY HH:mm) - in the terminal
-                    console.log("Date of event: " + moment(response.data[i].datetime).format("MM/DD/YYYY HH:mm A"));
-                    console.log("-------------------------------------------------"); 
+                    // if there is no upcoming event for this artist/band,
+                    if (response.data.length === 0) {
+                        // display a message
+                        console.log("Sorry, there is no upcoming events for this artist/band.")
+                    // if there is upcoming events,
+                    } else {
+                        // for each event, 
+                        for (var i = 0; i < response.data.length; i++) {
+                        // display the name of the venue - in the terminal
+                        console.log("-------------------------------------------------");
+                        console.log("Name of the Venue: " + response.data[i].venue.name);
+                        // display the venue location - in the terminal
+                        console.log("Venue's Location: " + response.data[i].venue.city);
+                        // display the date of the event (MM/DD/YYYY HH:mm) - in the terminal
+                        console.log("Date of event: " + moment(response.data[i].datetime).format("MM/DD/YYYY HH:mm A"));
+                        console.log("-------------------------------------------------"); 
+                        }
                     }
                 });
-        })
+        });
 }
 
 // function to get a movie name from the user, call OMDB API
@@ -88,39 +95,69 @@ function movie() {
         .prompt([
             {
                 type: "input",
-                message: "Which movie do you want infos about?",
+                message: "Which movie do you want infos about? - if no movie entered, you will get info on Mr. Nobody -",
                 name: "movieName"
             }
         ]).then(function (answer) {
-            // add user's answer to the query URL
-            var queryURL = "http://www.omdbapi.com/?t=" + answer.movieName.split(" ").join("+") + "&y=&plot=short&apikey=trilogy";
-            // console.log(queryURL);
-            // call the OMBD API using the node package "axios"
-            axios
-                .get(queryURL)
-                // once we get the data back so if axios request is successful
-                .then(function (response) {
-                    // console.log(response.data);
-                    // display the title of the movie - in the terminal
-                    console.log("-------------------------------------------------");
-                    console.log("Title: " + response.data.Title);
-                    // display the year the movie came out - in the terminal
-                    console.log("Year released: " + response.data.Year);
-                    // display the IMDB Rating of the movie - in the terminal
-                    console.log("IMDB Rating: " + response.data.imdbRating);
-                    // display the Rotten Tomatoes Rating of the movie - in the terminal
-                    console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
-                    // display the Country where the movie was produced - in the terminal
-                    console.log("Country: " + response.data.Country);
-                    // display the Language of the movie - in the terminal
-                    console.log("Language: " + response.data.Language);
-                    // display the Plot of the movie - in the terminal
-                    console.log("Plot: " + response.data.Plot);
-                    // display the Actors in the movie - in the terminal
-                    console.log("Actors: " + response.data.Actors);
-                    console.log("-------------------------------------------------");
-                });
-        })
+            // if the user entered a movie,
+            if (answer.movieName) {
+                // add the user's input to the query URL
+                var queryURL = "http://www.omdbapi.com/?t=" + answer.movieName.split(" ").join("+") + "&y=&plot=short&apikey=trilogy";
+                // console.log(queryURL);
+                // call the OMBD API using the node package "axios"
+                axios
+                    .get(queryURL)
+                    // once we get the data back so if axios request is successful
+                    .then(function (response) {
+                        // console.log(response.data);
+                        // display the title of the movie - in the terminal
+                        console.log("-------------------------------------------------");
+                        console.log("Title: " + response.data.Title);
+                        // display the year the movie came out - in the terminal
+                        console.log("Year released: " + response.data.Year);
+                        // display the IMDB Rating of the movie - in the terminal
+                        console.log("IMDB Rating: " + response.data.imdbRating);
+                        // display the Rotten Tomatoes Rating of the movie - in the terminal
+                        console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
+                        // display the Country where the movie was produced - in the terminal
+                        console.log("Country: " + response.data.Country);
+                        // display the Language of the movie - in the terminal
+                        console.log("Language: " + response.data.Language);
+                        // display the Plot of the movie - in the terminal
+                        console.log("Plot: " + response.data.Plot);
+                        // display the Actors in the movie - in the terminal
+                        console.log("Actors: " + response.data.Actors);
+                        console.log("-------------------------------------------------");
+                    });
+            // if the user didn't enter a movie, give info for the movie "Mr. Nobody"
+            } else {
+                // call the OMBD API using the node package "axios"
+                axios
+                    .get("http://www.omdbapi.com/?t=Mr.+Nobody&y=&plot=short&apikey=trilogy")
+                    // once we get the data back so if axios request is successful
+                    .then(function (response) {
+                        // display the title of the movie - in the terminal
+                        console.log("-------------------------------------------------");
+                        console.log("Title: " + response.data.Title);
+                        // display the year the movie came out - in the terminal
+                        console.log("Year released: " + response.data.Year);
+                        // display the IMDB Rating of the movie - in the terminal
+                        console.log("IMDB Rating: " + response.data.imdbRating);
+                        // display the Rotten Tomatoes Rating of the movie - in the terminal
+                        console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
+                        // display the Country where the movie was produced - in the terminal
+                        console.log("Country: " + response.data.Country);
+                        // display the Language of the movie - in the terminal
+                        console.log("Language: " + response.data.Language);
+                        // display the Plot of the movie - in the terminal
+                        console.log("Plot: " + response.data.Plot);
+                        // display the Actors in the movie - in the terminal
+                        console.log("Actors: " + response.data.Actors);
+                        console.log("-------------------------------------------------");
+                    });
+
+            }   
+        });
 }
 
 
@@ -148,7 +185,6 @@ inquirer
             band();
 
         } else if (answer.userChoice === actions[1]) {
-
 
 
         } else if (answer.userChoice === actions[2]) {
