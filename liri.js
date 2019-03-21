@@ -99,7 +99,7 @@ function band() {
                     if (response.data.length === 0) {
                         // display a message
                         console.log("Sorry, there is no upcoming events for this artist/band.")
-                    // if there is upcoming events
+                    // if there is upcoming event
                     } else {
                         // for evert event
                         for (var i = 0; i < response.data.length; i++) {
@@ -134,9 +134,15 @@ function band() {
                     // ask the user if she/he wants to choose another option
                     chooseOption();
                 })
-                // if there is error, display it
-                .catch(function (err) {
-                    console.log(err);
+                // if there is an error - so if the artist/band doesn't exist or is not found - typos in the name for example
+                .catch(function () {
+                    // display a message
+                    console.log("-----------------------------------");
+                    console.log("Sorry, I don't recognize this artist/band! Are you sure you wrote it right?");
+                    console.log("-----------------------------------");
+
+                    // ask the user if she/he wants to choose another option
+                    chooseOption();
                 });
         });
 }
@@ -205,9 +211,16 @@ function movie() {
                     // ask the user if she/he wants to choose another option
                     chooseOption();
                 })
-                // if there is error, display it
-                .catch(function (err) {
-                    console.log(err);
+                // if there is an error
+                // so if the song (and/or artist if entered as well) doesn't exist or is not found - typos in the name for example
+                .catch(function () {
+                    // display a message
+                    console.log("-----------------------------------");
+                    console.log("Sorry, I don't recognize this movie! Are you sure you wrote it right?");
+                    console.log("-----------------------------------");
+
+                    // ask the user if she/he wants to choose another option
+                    chooseOption();
                 });
         });
 }
@@ -220,7 +233,7 @@ function song() {
         .prompt([
             {
                 type: "input",
-                message: "Which song do you want infos about? - Enter a song (and artist(s)/band optional) - if no song entered, I'll choose one! -",
+                message: "Which song do you want infos about? - Enter a song (artist(s)/band optional) \n- if no song entered, I'll choose one! -",
                 name: "song"
             }
         ]).then(function (answer) {
@@ -229,9 +242,15 @@ function song() {
                 // use the node-spotify-api package to call the Spotify API with the user's input
                 spotify
                     .search({ type: "track", query: answer.song, limit: 1 }, function (err, data) {
-                        // if an error occured, display it
+                        // if an error occured so song doesn't exist or not recognized - typos in name for example
                         if (err) {
-                            return console.log("Error occurred: " + err);
+                            // display a message
+                            console.log("-----------------------------------");
+                            console.log("Sorry, I don't recognize this song! Are you sure you wrote it right?");
+                            console.log("-----------------------------------");
+
+                            // ask the user if she/he wants to choose another option
+                            chooseOption();
                         }
                         // if no error, display the info
                         // console.log(JSON.stringify(data, null, 2));
@@ -273,9 +292,15 @@ function song() {
                 // use the node-spotify-api package to call the Spotify API with "Despair, Hangover & Ecstasy" by The Do
                 spotify
                     .search({ type: "track", query: "Despair, Hangover & Ecstasy", limit: 1 }, function (err, data) {
-                        // if an error occured, display it
+                        // if an error occured so song doesn't exist or not recognized - typos in name for example
                         if (err) {
-                            return console.log("Error occurred: " + err);
+                            // display a message
+                            console.log("-----------------------------------");
+                            console.log("Sorry, I don't recognize this song! Are you sure you wrote it right?");
+                            console.log("-----------------------------------");
+
+                            // ask the user if she/he wants to choose another option
+                            chooseOption();
                         }
                         // if no error, display the info
                         // define a variable to refer to the data more easily
@@ -401,7 +426,9 @@ function chooseOption() {
                 // if the user choice is "Nothing, thank you!"
             } else if (answer.userChoice === actions[4]) {
                 // display message
+                console.log("-----------------------------------");
                 console.log("Ok, see you next time!");
+                console.log("-----------------------------------");
             }
         });
 }
@@ -412,7 +439,9 @@ function chooseOption() {
 // ------------------------------------------------------------------
 
 // welcome the user
+console.log("-----------------------------------");
 console.log("Welcome! I am Liri, a Language Interpretation and Recognition Interface.");
+console.log("-----------------------------------");
 // ask the user to choose an option
 chooseOption();
 
