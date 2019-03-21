@@ -16,7 +16,7 @@ So far, Liri proposes 5 options to the user - main menu:
 This option calls the BandsInTown API (using the "axios" node package) and lists the upcoming event information related to the user input. So after choosing this option, the user is asked to enter the name of a band or artist(s). If she/he doesn't enter a band or artist(s), the API is called with a default value (set to "Rodrigo y Gabriela", an amazing duo of guitar players!).
 The infos given are: the name of the band/artist(s), the name of the venue, the location of the venue and the date and time of the venue. The date and time of the venue have been converting with Moment.js.
 The infos are displayed in the terminal as well as stored in a file called "log.txt".
-If there is no event coming up, a "sorry" message is displayed and the main "menu" is shown for the user to choose an option again. If the artist/band is not found or recognized, a "sorry" message is displayed and the main menu is shown.
+If there is no event coming up, a "sorry" message is displayed and the main "menu" is shown for the user to choose an option again. If the artist(s)/band is not found or recognized, a "sorry" message is displayed and the main menu is shown as well.
 
 **spotify-this-song**<br>
 This option calls the Spotify API (using the "node-spotify-api" node package) and displays information related to the user input. So after choosing this option, the user is asked to enter the name of a song (and the name of the artist(s)/band if desired - this is optional). If she/he doesn't enter song, the API is called with a default value (set to "Despair, Hangover & Ecstasy" by the Do, a great song!).
@@ -51,10 +51,13 @@ To build this project, I used the following technologies:
 
 ### GIF showing Liri in action
 
+![GIF showing Liri in action](https://github.com/SophM/Liri-node-app/blob/master/assets/for-readme/gif-showing-liri-working.gif?raw=true)
 
 ---
 
-### GIF showing Liri handling an error
+### GIF showing Liri handling an error with "concert-this" as an example
+
+![GIF showing Liri handling an error](https://github.com/SophM/Liri-node-app/blob/master/assets/for-readme/gif-showing-handling-error.gif?raw=true)
 
 
 
