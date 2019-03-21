@@ -59,6 +59,9 @@ var fs = require("fs");
 // array of actions that the user as to choose from
 var actions = ["concert-this", "spotify-this-song", "movie-this", "do-what-it-says", "Nothing, thank you!"];
 
+// store the divider to render the data nicely in log.txt
+var divider = "\n\n------------------------------------------------------------\n";
+
 
 // ------------------------------------------------------------------
 // Functions
@@ -76,7 +79,7 @@ function band() {
                 name: "artist"
             }
         ]).then(function (answer) {
-            // if the user entered a movie
+            // if the user entered an artist/band
             if (answer.artist) {
                 // add the user's input to the query URL
                 var queryURL = "https://rest.bandsintown.com/artists/" + answer.artist.split(" ").join("%20") + "/events?app_id=liriApp";
@@ -91,25 +94,41 @@ function band() {
                 .get(queryURL)
                 // once we get the data back so if axios request is successful
                 .then(function (response) {
-                    // console.log(response.data);
+                    // console.log(response);
                     // if there is no upcoming event for this artist/band,
                     if (response.data.length === 0) {
                         // display a message
                         console.log("Sorry, there is no upcoming events for this artist/band.")
-                        // if there is upcoming events,
+                    // if there is upcoming events
                     } else {
-                        // for each event, 
+                        // for evert event
                         for (var i = 0; i < response.data.length; i++) {
-                            // display the name of the venue - in the terminal
-                            console.log("-------------------------------------------------");
-                            console.log("Artist(s)/Band: " + response.data[i].lineup[0]);
-                            console.log("Name of the Venue: " + response.data[i].venue.name);
-                            // display the venue location - in the terminal
-                            console.log("Venue's Location: " + response.data[i].venue.city);
-                            // display the date of the event (MM/DD/YYYY HH:mm) - in the terminal
-                            console.log("Date of event: " + moment(response.data[i].datetime).format("MM/DD/YYYY HH:mm A"));
-                            console.log("-------------------------------------------------");
+                            // store the data in an array: 
+                            var showData = [
+                                // the name of the artist(s)/band
+                                "Artist(s)/Band: " + response.data[i].lineup[0],
+                                // the name of the venue
+                                "Name of the Venue: " + response.data[i].venue.name,
+                                // the venue location
+                                "Venue's Location: " + response.data[i].venue.city,
+                                // the date of the event (MM/DD/YYYY HH:mm)
+                                "Date of event: " + moment(response.data[i].datetime).format("MM/DD/YYYY HH:mm A"),    
+                            ].join("\n");
+
+                            // print the data to the terminal
+                            console.log("-----------------------------------");
+                            console.log(showData);
+                            console.log("-----------------------------------");
+                        
+                            // store the data in a file called log.txt with the "fs" node package
+                            fs.appendFile("log.txt", showData + divider, function(err) {
+                                // display the error if there is any
+                                if (err) {
+                                    console.log(err);
+                                }
+                            });
                         }
+
                     }
 
                     // ask the user if she/he wants to choose another option
@@ -150,24 +169,38 @@ function movie() {
                 // once we get the data back so if axios request is successful
                 .then(function (response) {
                     // console.log(response.data);
-                    // display the title of the movie - in the terminal
-                    console.log("-------------------------------------------------");
-                    console.log("Title: " + response.data.Title);
-                    // display the year the movie came out - in the terminal
-                    console.log("Year released: " + response.data.Year);
-                    // display the IMDB Rating of the movie - in the terminal
-                    console.log("IMDB Rating: " + response.data.imdbRating);
-                    // display the Rotten Tomatoes Rating of the movie - in the terminal
-                    console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
-                    // display the country where the movie was produced - in the terminal
-                    console.log("Country: " + response.data.Country);
-                    // display the Language of the movie - in the terminal
-                    console.log("Language: " + response.data.Language);
-                    // display the Plot of the movie - in the terminal
-                    console.log("Plot: " + response.data.Plot);
-                    // display the Actors in the movie - in the terminal
-                    console.log("Actors: " + response.data.Actors);
-                    console.log("-------------------------------------------------");
+                    // store the data in an array
+                    var showData = [
+                        // the title of the movie
+                        "Title: " + response.data.Title,
+                        // the year the movie came out
+                        "Year released: " + response.data.Year,
+                        // display the IMDB Rating of the movie
+                        "IMDB Rating: " + response.data.imdbRating,
+                        // the Rotten Tomatoes rating of the movie
+                        "Rotten Tomatoes Rating: " + response.data.Ratings[1].Value,
+                        // display the country where the movie was produced
+                        "Country: " + response.data.Country,
+                        // the language of the movie
+                        "Language: " + response.data.Language,
+                        // the plot of the movie
+                        "Plot: " + response.data.Plot,
+                        // the actors in the movie
+                        "Actors: " + response.data.Actors,
+                    ].join("\n");
+
+                    // print the data to the terminal
+                    console.log("-----------------------------------");
+                    console.log(showData);
+                    console.log("-----------------------------------");
+                
+                    // store the data in a file called log.txt with the "fs" node package
+                    fs.appendFile("log.txt", showData + divider, function(err) {
+                        // display the error if there is any
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
 
                     // ask the user if she/he wants to choose another option
                     chooseOption();
@@ -187,11 +220,11 @@ function song() {
         .prompt([
             {
                 type: "input",
-                message: "Which song do you want infos about? - if no song entered, I'll choose one! -",
+                message: "Which song do you want infos about? - Enter a song (and artist(s)/band optional) - if no song entered, I'll choose one! -",
                 name: "song"
             }
         ]).then(function (answer) {
-            // if the user entered a song,
+            // if the user entered a song
             if (answer.song) {
                 // use the node-spotify-api package to call the Spotify API with the user's input
                 spotify
@@ -205,16 +238,31 @@ function song() {
                         // define a variable to refer to the data more easily
                         var results = data.tracks.items[0];
                         // console.log(JSON.stringify(results, null, 2));
-                        // display the name(s) of artist(s)/band - in the terminal
-                        console.log("-------------------------------------------------");
-                        console.log("Artist(s)/Band: " + results.artists[0].name);
-                        // display the name of the song - in the terminal
-                        console.log("Name of the song: " + results.name);
-                        // display the Spotify link of the song - in the terminal
-                        console.log("Spotify link of the song: " + results.external_urls.spotify);
-                        // display the name of the album the song is from - in the terminal
-                        console.log("Name of the album: " + results.album.name);
-                        console.log("-------------------------------------------------");
+                        
+                        // store the data in an array
+                        var showData = [
+                            // the name(s) of artist(s)/band
+                            "Artist(s)/Band: " + results.artists[0].name,
+                            // the name of the song
+                            "Name of the song: " + results.name,
+                            // the Spotify link of the song
+                            "Spotify link of the song: " + results.external_urls.spotify,
+                            // the name of the album the song is from
+                            "Name of the album: " + results.album.name,
+                        ].join("\n");
+
+                        // print the data to the terminal
+                        console.log("-----------------------------------");
+                        console.log(showData);
+                        console.log("-----------------------------------");
+                
+                        // store the data in a file called log.txt with the "fs" node package
+                        fs.appendFile("log.txt", showData + divider, function(err) {
+                            // display the error if there is any
+                            if (err) {
+                                console.log(err);
+                            }
+                        });
 
                         // ask the user if she/he wants to choose another option
                         chooseOption();
@@ -232,16 +280,31 @@ function song() {
                         // if no error, display the info
                         // define a variable to refer to the data more easily
                         var results = data.tracks.items[0];
-                        // display the name(s) of artist(s)/band - in the terminal
-                        console.log("-------------------------------------------------");
-                        console.log("Artist(s)/Band: " + results.artists[0].name);
-                        // display the name of the song - in the terminal
-                        console.log("Name of the song: " + results.name);
-                        // display the Spotify link of the song - in the terminal
-                        console.log("Spotify link of the song: " + results.external_urls.spotify);
-                        // display the name of the album the song is from - in the terminal
-                        console.log("Name of the album: " + results.album.name);
-                        console.log("-------------------------------------------------");
+
+                        // store the data in an array
+                        var showData = [
+                            // the name(s) of artist(s)/band
+                            "Artist(s)/Band: " + results.artists[0].name,
+                            // the name of the song
+                            "Name of the song: " + results.name,
+                            // the Spotify link of the song
+                            "Spotify link of the song: " + results.external_urls.spotify,
+                            // the name of the album the song is from
+                            "Name of the album: " + results.album.name,
+                        ].join("\n");
+
+                        // print the data to the terminal
+                        console.log("-----------------------------------");
+                        console.log(showData);
+                        console.log("-----------------------------------");
+                
+                        // store the data in a file called log.txt with the "fs" node package
+                        fs.appendFile("log.txt", showData + divider, function(err) {
+                            // display the error if there is any
+                            if (err) {
+                                console.log(err);
+                            }
+                        });
 
                         // ask the user if she/he wants to choose another option
                         chooseOption();
@@ -273,16 +336,31 @@ function whatItSays() {
                     // if no error, display the info
                     // define a variable to refer to the data more easily
                     var results = data.tracks.items[0];
-                    // display the name(s) of artist(s)/band - in the terminal
-                    console.log("-------------------------------------------------");
-                    console.log("Artist(s)/Band: " + results.artists[0].name);
-                    // display the name of the song - in the terminal
-                    console.log("Name of the song: " + results.name);
-                    // display the Spotify link of the song - in the terminal
-                    console.log("Spotify link of the song: " + results.external_urls.spotify);
-                    // display the name of the album the song is from - in the terminal
-                    console.log("Name of the album: " + results.album.name);
-                    console.log("-------------------------------------------------");
+
+                    // store the data in an array
+                    var showData = [
+                        // the name(s) of artist(s)/band
+                        "Artist(s)/Band: " + results.artists[0].name,
+                        // the name of the song
+                        "Name of the song: " + results.name,
+                        // the Spotify link of the song
+                        "Spotify link of the song: " + results.external_urls.spotify,
+                        // the name of the album the song is from
+                        "Name of the album: " + results.album.name,
+                    ].join("\n");
+
+                    // print the data to the terminal
+                    console.log("-----------------------------------");
+                    console.log(showData);
+                    console.log("-----------------------------------");
+            
+                    // store the data in a file called log.txt with the "fs" node package
+                    fs.appendFile("log.txt", showData + divider, function(err) {
+                        // display the error if there is any
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
 
                     // ask the user if she/he wants to choose another option
                     chooseOption();
