@@ -101,7 +101,7 @@ function band() {
                         console.log("Sorry, there is no upcoming events for this artist/band.")
                     // if there is upcoming event
                     } else {
-                        // for evert event
+                        // for every event
                         for (var i = 0; i < response.data.length; i++) {
                             // store the data in an array: 
                             var showData = [
