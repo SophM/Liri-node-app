@@ -2,8 +2,7 @@
 
 In this project, I built a Language Interpretation and Recognition Interface, called Liri.
 
-Liri is meant to be run in the terminal, using Node.js. Node.js is an open-source JavaScript runtime environment, that allows to execute JavaScript code outside of a browser. Several node packages have to be installed for Liri to run properly. They are listed in "liri.js", along with guidelines for the installation.
-After installing the required packages, type `node liri.js` in your terminal to run liri and get started!
+Liri is meant to be run in the terminal, using Node.js. Node.js is an open-source JavaScript runtime environment, that allows to execute JavaScript code outside of a browser. 
 
 So far, Liri proposes 5 options to the user - main menu:
 - concert-this
@@ -37,6 +36,25 @@ The infos are displayed in the terminal as well as stored in a file called "log.
 
 **Nothing, thank you!**<br>
 This option allows the user to quit Liri. After choosing this option, a "good bye" message is displayed and Liri closes.
+
+---
+
+### Getting set up
+
+Several node packages have to be installed for Liri to run properly. Follow the steps below to get set up:
+
+1. Using your terminal, navigate to the folder containing liri.js.
+
+2. If you DON'T have a file called "package.json" in your folder, run: `npm init -y` to create this file. If you do have this file, skip this step.
+
+3. Install the node packages, one after the other - the order doesn't matter - by running:
+- `npm install dotenv` 
+- `npm install inquirer`
+- `npm install axios`
+- `npm install --save node-spotify-api`
+- `npm install moment`
+
+4. After installing the required packages, type `node liri.js` in your terminal to start using liri!
 
 ---
 

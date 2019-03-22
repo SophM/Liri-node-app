@@ -1,26 +1,4 @@
 // ------------------------------------------------------------------
-// install the packages needed for the program to run
-// ------------------------------------------------------------------
-
-// Using your terminal, navigate to the folder containing liri.js
-
-// FIRST, if the file "package.json" is not present in the folder, run:
-// npm init -y
-
-// THEN, install the node packages, one after the other - the order doesn't matter
-// install the "dotenv" package by running
-// npm install dotenv 
-// install the "inquirer" package by running
-// npm install inquirer
-// install the "axios" package by running
-// npm install axios
-// install the "node-spotify-api" package by running 
-// npm install --save node-spotify-api
-// install the "moment" package by running 
-// npm install moment
-
-
-// ------------------------------------------------------------------
 // load the packages and files needed for the program to run
 // ------------------------------------------------------------------
 
