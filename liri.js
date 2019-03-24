@@ -389,19 +389,19 @@ function chooseOption() {
             if (answer.userChoice === actions[0]) {
                 // run the band() function
                 band();
-                // if the user choice is "spotify-this-song"
+            // if the user choice is "spotify-this-song"
             } else if (answer.userChoice === actions[1]) {
                 // run the spotify() function
                 song();
-                // if the user choice is "movie-this"
+            // if the user choice is "movie-this"
             } else if (answer.userChoice === actions[2]) {
                 // run the movie() function
                 movie();
-                // if the user choice is "do-what-it-says"
+            // if the user choice is "do-what-it-says"
             } else if (answer.userChoice === actions[3]) {
                 // run the whatItSays() function
                 whatItSays();
-                // if the user choice is "Nothing, thank you!"
+            // if the user choice is "Nothing, thank you!"
             } else if (answer.userChoice === actions[4]) {
                 // display message
                 console.log("-----------------------------------");
