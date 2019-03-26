@@ -77,6 +77,12 @@ To build this project, I used the following technologies:
 
 ![GIF showing Liri handling an error](https://github.com/SophM/Liri-node-app/blob/master/assets/for-readme/gif-showing-handling-error.gif?raw=true)
 
+--- 
+
+### Contribution
+
+- Sophie Mallez
+
 
 
 
