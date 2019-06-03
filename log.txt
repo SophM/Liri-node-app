@@ -1,0 +1,234 @@
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Technikum
+Venue's Location: Munich
+Date of event: 04/13/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: den Atelier
+Venue's Location: Luxembourg
+Date of event: 04/18/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Progresja
+Venue's Location: Warsaw
+Date of event: 04/14/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Printemps de Bourges
+Venue's Location: Bourges
+Date of event: 04/17/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Roundhouse
+Venue's Location: London
+Date of event: 04/24/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Olympia
+Venue's Location: Paris
+Date of event: 04/25/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Columbia Theatre
+Venue's Location: Berlin
+Date of event: 04/15/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Olympia Theatre
+Venue's Location: Dublin
+Date of event: 04/21/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Beale Street Music Festival
+Venue's Location: Memphis
+Date of event: 05/05/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Orpheum Theatre
+Venue's Location: Boston
+Date of event: 05/15/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Austin City Limits Live at The Moody Theater
+Venue's Location: Austin
+Date of event: 05/04/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Beacon Theatre
+Venue's Location: New York
+Date of event: 05/18/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: The Ridgefield Playhouse
+Venue's Location: Ridgefield
+Date of event: 05/19/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: The Paramount
+Venue's Location: Huntington
+Date of event: 05/21/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: The Fillmore Detroit
+Venue's Location: Detroit
+Date of event: 05/23/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: MUSILAC MONT BLANC
+Venue's Location: Chamonix
+Date of event: 04/27/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Franklin Music Hall
+Venue's Location: Philadelphia
+Date of event: 05/17/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Ryman Auditorium
+Venue's Location: Nashville
+Date of event: 06/02/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Greenfield Lake Amphitheatre 
+Venue's Location: Wilmington
+Date of event: 06/04/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Sprint Pavilion
+Venue's Location: Charlottesville
+Date of event: 06/05/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Cirque Royal
+Venue's Location: Brussels
+Date of event: 04/19/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Wolf Trap 
+Venue's Location: Vienna
+Date of event: 06/07/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Place des Arts
+Venue's Location: Montreal
+Date of event: 07/03/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Ottawa Bluesfest
+Venue's Location: Ottawa
+Date of event: 07/05/2019 17:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: The Fox Theatre
+Venue's Location: Atlanta
+Date of event: 06/01/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Fargo Theatre
+Venue's Location: Fargo
+Date of event: 07/10/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: The Wilma
+Venue's Location: Missoula
+Date of event: 07/12/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: The Wilma
+Venue's Location: Missoula
+Date of event: 07/12/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Lake Superior Big Top Chautauqua  
+Venue's Location: Bayfield
+Date of event: 07/09/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Edgefield Amphitheater
+Venue's Location: Troutdale
+Date of event: 07/16/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Britt Festival Pavilion
+Venue's Location: Jacksonville
+Date of event: 07/18/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: The Chicago Theatre
+Venue's Location: Chicago
+Date of event: 05/24/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: The Mountain Winery
+Venue's Location: Saratoga
+Date of event: 07/21/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Harrah's Reno - The Plaza
+Venue's Location: Reno
+Date of event: 07/26/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Deer Valley Resort
+Venue's Location: Park City
+Date of event: 07/27/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Denver Botanic Gardens Chatfield Farms
+Venue's Location: Littleton
+Date of event: 07/28/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: The Greek Theater
+Venue's Location: Los Angeles
+Date of event: 07/23/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: Vogue Theatre
+Venue's Location: Vancouver
+Date of event: 07/14/2019 19:00 PM
+
+------------------------------------------------------------
+Artist(s)/Band: Rodrigo y Gabriela
+Name of the Venue: LaureLive
+Venue's Location: Cleveland
+Date of event: 06/08/2019 19:00 PM
+
+------------------------------------------------------------
